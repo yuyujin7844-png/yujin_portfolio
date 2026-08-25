@@ -34,13 +34,18 @@ jobs:
         working-directory: ./lecture1
         run: npm run build
 
+      - name: Assemble Pages site
+        run: |
+          mkdir -p pages-dist/lecture1
+          cp -r lecture1/dist/. pages-dist/lecture1/
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './lecture1/dist'
+          path: './pages-dist'
 
   deploy:
     environment:

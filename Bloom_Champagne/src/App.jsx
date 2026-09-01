@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import BestPage from './pages/BestPage.jsx';
@@ -8,7 +8,7 @@ import SalePage from './pages/SalePage.jsx';
 
 export default function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
@@ -17,6 +17,6 @@ export default function App() {
         <Route path="/accessories" element={<AccessoriesPage />} />
         <Route path="/sale" element={<SalePage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }

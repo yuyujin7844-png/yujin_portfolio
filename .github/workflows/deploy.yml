@@ -44,8 +44,6 @@ jobs:
           cp deploy/index.html pages-dist/index.html
           cp -r mini_sns/dist pages-dist/mini_sns
           cp -r Bloom_Champagne/dist pages-dist/Bloom_Champagne
-          # SPA(BrowserRouter) 딥링크 새로고침 대응
-          cp Bloom_Champagne/dist/index.html pages-dist/Bloom_Champagne/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

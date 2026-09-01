@@ -9,18 +9,20 @@ React + MUI + Supabase 실습 프로젝트 모음. 한 저장소 안에 여러 �
 | 랜딩페이지 | <https://yuyujin7844-png.github.io/yujin_portfolio/> | 각 프로젝트로 가는 인덱스 |
 | Moviestagram (`mini_sns`) | <https://yuyujin7844-png.github.io/yujin_portfolio/mini_sns/> | 영화·공연 감상 공유 미니 SNS |
 | Bloom Champagne (`Bloom_Champagne`) | <https://yuyujin7844-png.github.io/yujin_portfolio/Bloom_Champagne/> | 논알코올 스파클링 브랜드 랜딩페이지 |
+| Winter Forest Market (`winter_foreste_market`) | <https://yuyujin7844-png.github.io/yujin_portfolio/winter_foreste_market/> | 태화강 국가정원 크리스마스 마켓 행사 랜딩페이지 |
 
-`main` 브랜치에 push하면 `.github/workflows/deploy.yml`이 두 프로젝트를 빌드해 자동 배포합니다 (약 1분 소요).
+`main` 브랜치에 push하면 `.github/workflows/deploy.yml`이 세 프로젝트를 빌드해 자동 배포합니다 (약 1~2분 소요).
 
 ## 프로젝트 구조
 
 ```
 yujin_portfolio/
-├── mini_sns/              # Moviestagram (Vite + React + MUI + Supabase)
-├── Bloom_Champagne/       # Bloom Champagne 랜딩페이지 (Vite + React + MUI + Supabase)
-├── deploy/index.html      # 배포 시 사이트 루트에 올라가는 랜딩페이지
+├── mini_sns/                 # Moviestagram (Vite + React + MUI + Supabase)
+├── Bloom_Champagne/          # Bloom Champagne 랜딩페이지 (Vite + React + MUI + Supabase)
+├── winter_foreste_market/    # Winter Forest Market 크리스마스 마켓 랜딩페이지 (Vite + React + MUI + Supabase)
+├── deploy/index.html         # 배포 시 사이트 루트에 올라가는 랜딩페이지
 └── .github/workflows/
-    └── deploy.yml         # GitHub Pages 배포 워크플로
+    └── deploy.yml            # GitHub Pages 배포 워크플로
 ```
 
 ## 로컬 실행 방법
@@ -49,6 +51,19 @@ npm run dev
 
 - 개발 서버: <http://localhost:5173/yujin_portfolio/Bloom_Champagne/>
 - 이미지·영상은 `assets/` 폴더를 `publicDir`로 사용합니다.
+
+### winter_foreste_market
+
+```bash
+cd winter_foreste_market
+npm install
+npm run dev
+```
+
+- 개발 서버: <http://localhost:5173/yujin_portfolio/winter_foreste_market/>
+- 단일 페이지 랜딩(라우터 없음). 헤더 메뉴는 `#about` 등 해시 앵커로 스크롤합니다.
+- 포스터·티켓·심볼 이미지는 `assets/` 폴더를 `publicDir`로 사용합니다.
+- 티켓 예약 폼은 더미이며 `wfm_ticket_reservations` 테이블에 INSERT만 합니다 (실결제 없음).
 
 ### 공통 스크립트
 
@@ -85,6 +100,7 @@ VITE_SUPABASE_ANON_KEY=<your-anon-key>
 |---|---|---|
 | `mini_sns` | `supabase/migrations/20260901000000_mini_sns_initial_schema.sql` | `ms_users`, `ms_posts`, `ms_comments` |
 | `Bloom_Champagne` | `supabase/migrations/20260901000000_bloom_reservations_schema.sql` | `bloom_reservations` |
+| `winter_foreste_market` | `supabase/migrations/20260901000000_wfm_ticket_reservations_schema.sql` | `wfm_ticket_reservations` |
 
 새 Supabase 프로젝트에 적용하려면 대시보드 SQL Editor에 해당 파일 내용을 붙여넣어 실행하거나,
 Supabase CLI로 `supabase db push` 하세요. (데모용이라 RLS 정책이 느슨하게 열려 있습니다.)

@@ -1,4 +1,4 @@
-import { Box, Typography, Stack, Button, Grid } from '@mui/material';
+import { Box, Typography, Stack, Button } from '@mui/material';
 import PaperSection from '../components/ui/PaperSection.jsx';
 import SectionTitle from '../components/ui/SectionTitle.jsx';
 import { GOLD, BURGUNDY, DEEP_GREEN, CREAM } from '../theme.js';
@@ -20,51 +20,56 @@ export default function TicketsSection({ onReserve }) {
         ko="이 페이지의 핵심입니다. 마음에 드는 티켓을 골라 사전 예약하고, 행사 당일 한정판 머그컵을 받아 가세요."
       />
 
-      <Grid container spacing={{ xs: 3, md: 4 }} sx={{ mb: 5 }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+          gap: { xs: 3, md: 4 },
+          mb: 5,
+        }}
+      >
         {TICKETS.map((t) => (
-          <Grid item xs={12} sm={6} key={t.type}>
+          <Box
+            key={t.type}
+            sx={{
+              border: `1px solid ${GOLD}`,
+              p: { xs: 2, md: 2.5 },
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 2,
+              backgroundColor: CREAM,
+              boxShadow: `6px 6px 0 ${t.color}22`,
+            }}
+          >
             <Box
+              component="img"
+              src={t.image}
+              alt={`${t.nameEn} 디자인 시안`}
+              loading="lazy"
+              sx={{ width: '100%', objectFit: 'contain', border: `1px solid ${GOLD}55` }}
+            />
+            <Typography
+              variant="h6"
+              sx={{ color: t.color, fontStyle: 'italic', fontFamily: '"Playfair Display", serif' }}
+            >
+              {t.nameEn}
+            </Typography>
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={() => onReserve(t.type)}
               sx={{
-                border: `1px solid ${GOLD}`,
-                p: { xs: 2, md: 2.5 },
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 2,
-                backgroundColor: CREAM,
-                boxShadow: `6px 6px 0 ${t.color}22`,
+                borderColor: t.color,
+                color: t.color,
+                '&:hover': { borderColor: t.color, backgroundColor: `${t.color}14` },
               }}
             >
-              <Box
-                component="img"
-                src={t.image}
-                alt={`${t.nameEn} 디자인 시안`}
-                loading="lazy"
-                sx={{ width: '100%', objectFit: 'contain', border: `1px solid ${GOLD}55` }}
-              />
-              <Typography
-                variant="h6"
-                sx={{ color: t.color, fontStyle: 'italic', fontFamily: '"Playfair Display", serif' }}
-              >
-                {t.nameEn}
-              </Typography>
-              <Button
-                fullWidth
-                variant="outlined"
-                onClick={() => onReserve(t.type)}
-                sx={{
-                  borderColor: t.color,
-                  color: t.color,
-                  '&:hover': { borderColor: t.color, backgroundColor: `${t.color}14` },
-                }}
-              >
-                이 티켓으로 예약
-              </Button>
-            </Box>
-          </Grid>
+              이 티켓으로 예약
+            </Button>
+          </Box>
         ))}
-      </Grid>
+      </Box>
 
       {/* 예약 규칙 */}
       <Box sx={{ borderTop: `1px solid ${GOLD}55`, pt: 4 }}>

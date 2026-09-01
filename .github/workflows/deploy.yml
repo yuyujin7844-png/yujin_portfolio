@@ -38,12 +38,19 @@ jobs:
           npm install
           npm run build
 
+      - name: Build winter_foreste_market
+        working-directory: ./winter_foreste_market
+        run: |
+          npm install
+          npm run build
+
       - name: Assemble Pages site
         run: |
           mkdir -p pages-dist
           cp deploy/index.html pages-dist/index.html
           cp -r mini_sns/dist pages-dist/mini_sns
           cp -r Bloom_Champagne/dist pages-dist/Bloom_Champagne
+          cp -r winter_foreste_market/dist pages-dist/winter_foreste_market
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

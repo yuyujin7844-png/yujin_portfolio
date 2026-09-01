@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>yujin portfolio</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        min-height: 100vh;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+        background: #14110f;
+        color: #f5f0e8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        gap: 40px;
+      }
+      h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); letter-spacing: -0.02em; }
+      p.sub { color: #a89b7a; margin-top: 8px; }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        width: 100%;
+        max-width: 720px;
+      }
+      a.card {
+        display: block;
+        padding: 28px 24px;
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        border-radius: 12px;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 0.2s, transform 0.2s;
+        background: #1b1714;
+      }
+      a.card:hover { border-color: #d4af37; transform: translateY(-3px); }
+      a.card h2 { font-size: 1.2rem; margin-bottom: 6px; }
+      a.card span { color: #a89b7a; font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <header style="text-align: center">
+      <h1>yujin portfolio</h1>
+      <p class="sub">React + MUI + Supabase 실습 프로젝트 모음</p>
+    </header>
+    <nav class="grid">
+      <a class="card" href="./mini_sns/">
+        <h2>Moviestagram</h2>
+        <span>영화·공연 감상 공유 미니 SNS</span>
+      </a>
+      <a class="card" href="./Bloom_Champagne/">
+        <h2>Bloom Champagne</h2>
+        <span>논알코올 스파클링 브랜드 랜딩페이지</span>
+      </a>
+    </nav>
+  </body>
+</html>

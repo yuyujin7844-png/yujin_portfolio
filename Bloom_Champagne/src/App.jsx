@@ -8,7 +8,7 @@ import SalePage from './pages/SalePage.jsx';
 
 export default function App() {
   return (
-    <BrowserRouter basename="/my-ai-web/Bloom_Champagne">
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />

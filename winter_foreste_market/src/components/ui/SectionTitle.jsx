@@ -1,11 +1,12 @@
 import { Box, Typography } from '@mui/material';
-import { GOLD, BURGUNDY } from '../../theme.js';
+import { GOLD, BURGUNDY, CREAM } from '../../theme.js';
 
 /**
  * 섹션 제목 — 영문 세리프 헤드라인 + (선택) 한글 보조 설명.
  * 언어 규칙: 제목은 영문, 보조 설명은 한글.
+ * `dark`(짙은 배경 섹션)에서는 제목을 골드, 보조 설명을 크림톤으로 반전한다.
  */
-export default function SectionTitle({ en, ko, align = 'center' }) {
+export default function SectionTitle({ en, ko, align = 'center', dark = false }) {
   return (
     <Box sx={{ textAlign: align, mb: { xs: 4, md: 6 } }}>
       <Box
@@ -26,7 +27,7 @@ export default function SectionTitle({ en, ko, align = 'center' }) {
       <Typography
         variant="h2"
         sx={{
-          color: BURGUNDY,
+          color: dark ? GOLD : BURGUNDY,
           fontSize: { xs: '2rem', md: '2.75rem' },
           fontStyle: 'italic',
         }}
@@ -36,7 +37,7 @@ export default function SectionTitle({ en, ko, align = 'center' }) {
       {ko && (
         <Typography
           variant="body2"
-          sx={{ color: 'text.secondary', mt: 1.5, maxWidth: 560, mx: align === 'center' ? 'auto' : 0 }}
+          sx={{ color: dark ? `${CREAM}cc` : 'text.secondary', mt: 1.5, maxWidth: 560, mx: align === 'center' ? 'auto' : 0 }}
         >
           {ko}
         </Typography>

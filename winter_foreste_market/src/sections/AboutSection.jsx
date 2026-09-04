@@ -8,24 +8,26 @@ const mug = `${import.meta.env.BASE_URL}mug-and-ticket.jpg`;
 
 export default function AboutSection() {
   return (
-    <PaperSection id="about" maxWidth="md">
-      <SectionTitle en="About" />
+    <PaperSection id="about" maxWidth="sm">
+      <Stack spacing={4} alignItems="center">
+        <SectionTitle en="About" />
 
-      <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 4, md: 6 }} alignItems="center">
         <Box
           component="img"
           src={mug}
           alt="겨울 숲 마켓의 뱅쇼와 한정판 머그컵"
           loading="lazy"
           sx={{
-            width: { xs: '100%', md: '46%' },
+            width: '100%',
+            maxWidth: 480,
             aspectRatio: '4 / 3',
             objectFit: 'cover',
             border: `1px solid ${GOLD}`,
             boxShadow: `6px 6px 0 ${GOLD}33`,
           }}
         />
-        <Box sx={{ flex: 1 }}>
+
+        <Box sx={{ textAlign: 'center' }}>
           <Typography variant="subtitle1" sx={{ mb: 2 }}>
             {EVENT.nameEn}는 겨울밤의 태화강 국가정원을 작은 유럽식 크리스마스 마켓으로
             물들이는 행사입니다. 만남의 광장에 나무 부스와 따뜻한 조명을 두르고,

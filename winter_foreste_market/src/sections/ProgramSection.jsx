@@ -1,7 +1,7 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import PaperSection from '../components/ui/PaperSection.jsx';
 import SectionTitle from '../components/ui/SectionTitle.jsx';
-import { GOLD, BURGUNDY } from '../theme.js';
+import { GOLD, CREAM } from '../theme.js';
 import { PROGRAMS } from '../data/eventInfo.js';
 
 export default function ProgramSection() {
@@ -12,37 +12,64 @@ export default function ProgramSection() {
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' },
-          gap: { xs: 2.5, md: 3 },
+          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+          gap: { xs: 2, md: 2.5 },
         }}
       >
         {PROGRAMS.map((p, i) => (
           <Box
             key={p.titleEn}
             sx={{
-              border: `1px solid ${GOLD}66`,
-              p: 3,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 1,
-              transition: 'border-color .25s ease, transform .25s ease',
-              '&:hover': { borderColor: GOLD, transform: 'translateY(-4px)' },
+              position: 'relative',
+              aspectRatio: '4 / 3',
+              overflow: 'hidden',
+              border: `1px solid ${GOLD}`,
+              '&:hover img': { transform: 'scale(1.04)' },
             }}
           >
-            <Typography sx={{ fontFamily: '"Playfair Display", serif', color: GOLD, fontSize: '0.85rem' }}>
-              {String(i + 1).padStart(2, '0')}
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{ color: BURGUNDY, fontStyle: 'italic', fontFamily: '"Playfair Display", serif', fontSize: '1.15rem' }}
+            <Box
+              component="img"
+              src={`${import.meta.env.BASE_URL}${p.image}`}
+              alt={p.titleEn}
+              loading="lazy"
+              sx={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+                transition: 'transform .5s ease',
+              }}
+            />
+            <Box
+              sx={{
+                position: 'absolute',
+                insetInline: 0,
+                bottom: 0,
+                px: 2,
+                py: 1.5,
+                backgroundImage: 'linear-gradient(180deg, transparent, rgba(20,10,8,0.82))',
+              }}
             >
-              {p.titleEn}
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {p.desc}
-            </Typography>
+              <Typography sx={{ fontFamily: '"Playfair Display", serif', color: GOLD, fontSize: '0.75rem' }}>
+                {String(i + 1).padStart(2, '0')}
+              </Typography>
+              <Typography
+                sx={{ color: CREAM, fontStyle: 'italic', fontFamily: '"Playfair Display", serif', fontSize: '1.1rem' }}
+              >
+                {p.titleEn}
+              </Typography>
+              <Typography variant="body2" sx={{ color: `${CREAM}cc`, mt: 0.3 }}>
+                {p.desc}
+              </Typography>
+            </Box>
           </Box>
         ))}
+      </Box>
+
+      <Box sx={{ textAlign: 'center', mt: 5 }}>
+        <Button variant="outlined" size="large" onClick={(e) => e.preventDefault()} sx={{ px: 5 }}>
+          자세히 보기
+        </Button>
       </Box>
     </PaperSection>
   );

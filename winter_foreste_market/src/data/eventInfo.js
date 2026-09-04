@@ -11,6 +11,7 @@ export const EVENT = {
   ],
   timeRange: '17:00 ~ 22:00',
   dateRangeKo: '2026년 12월 22일(화) ~ 24일(목)',
+  dateRangeShort: '2026.12.22-24',
   venue: '태화강 국가정원 만남의 광장',
   address: '울산 중구 태화동',
   admission: '무료',
@@ -18,30 +19,14 @@ export const EVENT = {
   host: '울산광역시',
 };
 
-// 사전 티켓 (레드 / 그린 2종) — mug-and-ticket / ticket 이미지 참고
-export const TICKETS = [
-  {
-    type: 'red',
-    nameEn: 'Red Ticket',
-    color: '#6B1F2A',
-    image: `${import.meta.env.BASE_URL}ticket-red.png`,
-  },
-  {
-    type: 'green',
-    nameEn: 'Green Ticket',
-    color: '#1B3A2F',
-    image: `${import.meta.env.BASE_URL}ticket-green.png`,
-  },
-];
-
 // 프로그램 구성 (브리프에 나열된 6가지)
 export const PROGRAMS = [
-  { titleEn: 'Photo Zone', desc: '숲과 조명으로 꾸민 포토존에서 겨울밤을 기록하세요.' },
-  { titleEn: 'Market Booth', desc: '지역 작가와 소상공인의 수공예·리빙 소품 마켓 부스.' },
-  { titleEn: 'Food Truck', desc: '따뜻한 겨울 먹거리를 파는 푸드트럭이 광장을 채웁니다.' },
-  { titleEn: 'Vin Chaud & Cocoa Party', desc: '사전 예약 머그컵에 뱅쇼와 핫코코아를 담아 드리는 파티.' },
-  { titleEn: 'Santa Event', desc: '산타와 함께하는 사진 촬영과 작은 선물 이벤트.' },
-  { titleEn: 'Busking', desc: '광장 무대에서 이어지는 겨울밤 라이브 버스킹 공연.' },
+  { titleEn: 'Photo Zone', desc: '숲과 조명으로 꾸민 포토존에서 겨울밤을 기록하세요.', image: 'program-photozone.jpg' },
+  { titleEn: 'Market Booth', desc: '지역 작가와 소상공인의 수공예·리빙 소품 마켓 부스.', image: 'program-marketbooth.jpg' },
+  { titleEn: 'Food Truck', desc: '따뜻한 겨울 먹거리를 파는 푸드트럭이 광장을 채웁니다.', image: 'program-foodtruck.jpg' },
+  { titleEn: 'Vin Chaud & Cocoa Party', desc: '사전 예약 머그컵에 뱅쇼와 핫코코아를 담아 드리는 파티.', image: 'program-vinchaud.jpg' },
+  { titleEn: 'Santa Event', desc: '산타와 함께하는 사진 촬영과 작은 선물 이벤트.', image: 'program-santa.jpg' },
+  { titleEn: 'Busking', desc: '광장 무대에서 이어지는 겨울밤 라이브 버스킹 공연.', image: 'program-busking.jpg' },
 ];
 
 export const FAQS = [

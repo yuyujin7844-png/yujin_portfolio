@@ -1,8 +1,13 @@
 import { Box, Typography, Stack, Button } from '@mui/material';
 import PaperSection from '../components/ui/PaperSection.jsx';
 import SectionTitle from '../components/ui/SectionTitle.jsx';
-import { GOLD, BURGUNDY, DEEP_GREEN, CREAM } from '../theme.js';
-import { TICKETS } from '../data/eventInfo.js';
+import { GOLD, DEEP_GREEN, CREAM } from '../theme.js';
+
+const MUG_PHOTOS = [
+  { key: 'red', caption: 'Red Front Ver.', image: `${import.meta.env.BASE_URL}mug-red-front.jpg` },
+  { key: 'green', caption: 'Green Front Ver.', image: `${import.meta.env.BASE_URL}mug-green-front.jpg` },
+  { key: 'back', caption: 'Back', image: `${import.meta.env.BASE_URL}mug-back.jpg` },
+];
 
 const RULES = [
   '사전 예약자에게 2026 한정판 머그컵을 드립니다. 뱅쇼 또는 핫코코아를 이 머그컵에 담아 제공합니다.',
@@ -14,67 +19,41 @@ const RULES = [
 
 export default function TicketsSection({ onReserve }) {
   return (
-    <PaperSection id="tickets" maxWidth="md">
+    <PaperSection id="tickets" maxWidth="md" framed={false} sx={{ backgroundColor: DEEP_GREEN, color: CREAM }}>
       <SectionTitle
-        en="Tickets"
+        en="Ticket"
         ko="이 페이지의 핵심입니다. 마음에 드는 티켓을 골라 사전 예약하고, 행사 당일 한정판 머그컵을 받아 가세요."
+        dark
       />
 
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
-          gap: { xs: 3, md: 4 },
-          mb: 5,
+          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' },
+          gap: { xs: 3, md: 3 },
+          mb: 6,
         }}
       >
-        {TICKETS.map((t) => (
-          <Box
-            key={t.type}
-            sx={{
-              border: `1px solid ${GOLD}`,
-              p: { xs: 2, md: 2.5 },
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 2,
-              backgroundColor: CREAM,
-              boxShadow: `6px 6px 0 ${t.color}22`,
-            }}
-          >
+        {MUG_PHOTOS.map((m) => (
+          <Box key={m.key} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5 }}>
             <Box
               component="img"
-              src={t.image}
-              alt={`${t.nameEn} 디자인 시안`}
+              src={m.image}
+              alt={`2026 한정판 머그컵 — ${m.caption}`}
               loading="lazy"
-              sx={{ width: '100%', objectFit: 'contain', border: `1px solid ${GOLD}55` }}
+              sx={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', backgroundColor: CREAM }}
             />
-            <Typography
-              variant="h6"
-              sx={{ color: t.color, fontStyle: 'italic', fontFamily: '"Playfair Display", serif' }}
-            >
-              {t.nameEn}
+            <Typography variant="caption" sx={{ color: `${CREAM}bb`, letterSpacing: '0.06em' }}>
+              {m.caption}
             </Typography>
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => onReserve(t.type)}
-              sx={{
-                borderColor: t.color,
-                color: t.color,
-                '&:hover': { borderColor: t.color, backgroundColor: `${t.color}14` },
-              }}
-            >
-              이 티켓으로 예약
-            </Button>
           </Box>
         ))}
       </Box>
 
       {/* 예약 규칙 */}
       <Box sx={{ borderTop: `1px solid ${GOLD}55`, pt: 4 }}>
-        <Typography variant="subtitle2" sx={{ color: DEEP_GREEN, mb: 2, letterSpacing: '0.04em' }}>
-          예약 안내
+        <Typography variant="subtitle2" sx={{ color: GOLD, mb: 2, letterSpacing: '0.04em' }}>
+          티켓 예약 안내
         </Typography>
         <Stack spacing={1.5}>
           {RULES.map((rule, i) => (
@@ -82,7 +61,7 @@ export default function TicketsSection({ onReserve }) {
               <Box component="span" sx={{ color: GOLD, lineHeight: 1.9, flexShrink: 0 }}>
                 ✦
               </Box>
-              <Typography variant="body1">{rule}</Typography>
+              <Typography variant="body1" sx={{ color: `${CREAM}e0` }}>{rule}</Typography>
             </Stack>
           ))}
         </Stack>
@@ -90,12 +69,18 @@ export default function TicketsSection({ onReserve }) {
 
       <Box sx={{ textAlign: 'center', mt: 5 }}>
         <Button
-          variant="contained"
+          variant="outlined"
           size="large"
           onClick={() => onReserve()}
-          sx={{ px: 5, py: 1.6, backgroundColor: BURGUNDY, color: CREAM }}
+          sx={{
+            px: 5,
+            py: 1.6,
+            borderColor: GOLD,
+            color: GOLD,
+            '&:hover': { borderColor: GOLD, backgroundColor: `${GOLD}1A` },
+          }}
         >
-          티켓 예약하기
+          티켓 구매하기
         </Button>
       </Box>
     </PaperSection>

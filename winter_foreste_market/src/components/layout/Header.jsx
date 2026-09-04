@@ -12,7 +12,7 @@ const symbolMini = `${import.meta.env.BASE_URL}symbol-mini.svg`;
 
 const NAV_ITEMS = [
   { label: 'About', id: 'about' },
-  { label: 'Tickets', id: 'tickets' },
+  { label: 'Ticket', id: 'tickets' },
   { label: 'Program', id: 'program' },
   { label: 'Location', id: 'location' },
   { label: 'FAQ', id: 'faq' },

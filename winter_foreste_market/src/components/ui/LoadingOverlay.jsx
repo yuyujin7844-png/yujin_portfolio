@@ -203,14 +203,22 @@ export default function LoadingOverlay() {
     spinParts.current = { letters, diamonds };
   }, [reduced]);
 
+  // 로딩 중에만 본문 스크롤 잠금 — 오버레이가 사라지면(gone) 반드시 원복해
+  // 스크롤 이동이 다시 동작하도록 별도 이펙트로 분리한다.
+  useEffect(() => {
+    if (reduced || gone) return undefined;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [reduced, gone]);
+
   useEffect(() => {
     if (reduced) {
       setGone(true);
-      return;
+      return undefined;
     }
-
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
 
     let raf = 0;
     const start = performance.now();
@@ -251,11 +259,11 @@ export default function LoadingOverlay() {
 
     raf = requestAnimationFrame(tick);
 
+    const pending = timers.current;
     return () => {
       cancelAnimationFrame(raf);
-      timers.current.forEach(clearTimeout);
-      timers.current = [];
-      document.body.style.overflow = prevOverflow;
+      pending.forEach(clearTimeout);
+      pending.length = 0;
     };
   }, [reduced]);
 

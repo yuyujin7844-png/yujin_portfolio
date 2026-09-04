@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import { GOLD, BURGUNDY, CREAM } from '../../theme.js';
+import { GOLD, BURGUNDY, CREAM, CONTENT_MAX_WIDTH, SECTION_PX } from '../../theme.js';
 
 const symbolMini = `${import.meta.env.BASE_URL}symbol-mini.svg`;
 
@@ -54,20 +54,21 @@ export default function Header() {
         position="sticky"
         elevation={0}
         sx={{
-          background: 'transparent',
+          // 버건디 Hero 위로 스크롤될 때도 메뉴 대비가 유지되도록 불투명에 가까운 크림 배경 사용
+          backgroundColor: `${CREAM}f2`,
           backgroundImage: 'none',
           boxShadow: 'none',
           borderBottom: `1px solid ${GOLD}44`,
           backdropFilter: 'blur(2px)',
         }}
       >
-        <Container maxWidth="lg" disableGutters>
+        <Container disableGutters maxWidth={false} sx={{ maxWidth: CONTENT_MAX_WIDTH, mx: 'auto' }}>
           <Toolbar
             disableGutters
             sx={{
               minHeight: '64px !important',
               height: 64,
-              px: { xs: 2, md: 3 },
+              px: SECTION_PX,
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',

@@ -2,12 +2,12 @@ import { Accordion, AccordionSummary, AccordionDetails, Typography, Box } from '
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PaperSection from '../components/ui/PaperSection.jsx';
 import SectionTitle from '../components/ui/SectionTitle.jsx';
-import { GOLD, BURGUNDY, CREAM } from '../theme.js';
+import { GOLD, BURGUNDY, CREAM_DEEP } from '../theme.js';
 import { FAQS } from '../data/eventInfo.js';
 
 export default function FaqSection() {
   return (
-    <PaperSection id="faq" maxWidth="sm">
+    <PaperSection id="faq">
       <SectionTitle en="FAQ" />
 
       <Box>
@@ -47,7 +47,7 @@ export default function FaqSection() {
         ))}
       </Box>
 
-      <Box sx={{ mt: 4, p: 2.5, textAlign: 'center', border: `1px solid ${GOLD}`, backgroundColor: `${CREAM}` }}>
+      <Box sx={{ mt: 4, p: 2.5, backgroundColor: CREAM_DEEP }}>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           더 궁금한 점이 있으면 <Box component="span" sx={{ color: BURGUNDY, fontWeight: 700 }}>052-123-4567</Box> 로 문의해 주세요.
         </Typography>

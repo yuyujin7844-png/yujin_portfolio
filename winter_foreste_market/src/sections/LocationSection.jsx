@@ -8,7 +8,7 @@ const map = `${import.meta.env.BASE_URL}map.jpg`;
 
 export default function LocationSection() {
   return (
-    <PaperSection id="location" maxWidth="md">
+    <PaperSection id="location">
       <SectionTitle en="Location" />
 
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 4, md: 6 }}>

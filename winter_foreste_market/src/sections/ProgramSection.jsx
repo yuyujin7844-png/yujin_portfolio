@@ -1,12 +1,12 @@
 import { Box, Typography, Button } from '@mui/material';
 import PaperSection from '../components/ui/PaperSection.jsx';
 import SectionTitle from '../components/ui/SectionTitle.jsx';
-import { GOLD, CREAM } from '../theme.js';
+import { GOLD, CREAM, DEEP_GREEN } from '../theme.js';
 import { PROGRAMS } from '../data/eventInfo.js';
 
 export default function ProgramSection() {
   return (
-    <PaperSection id="program" maxWidth="md">
+    <PaperSection id="program">
       <SectionTitle en="Program" ko="사흘 밤, 광장 곳곳에서 이어지는 프로그램입니다." />
 
       <Box
@@ -23,7 +23,6 @@ export default function ProgramSection() {
               position: 'relative',
               aspectRatio: '4 / 3',
               overflow: 'hidden',
-              border: `1px solid ${GOLD}`,
               '&:hover img': { transform: 'scale(1.04)' },
             }}
           >
@@ -43,11 +42,14 @@ export default function ProgramSection() {
             <Box
               sx={{
                 position: 'absolute',
-                insetInline: 0,
-                bottom: 0,
-                px: 2,
-                py: 1.5,
-                backgroundImage: 'linear-gradient(180deg, transparent, rgba(20,10,8,0.82))',
+                inset: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                px: 2.5,
+                py: 2,
+                backgroundColor: `${DEEP_GREEN}99`,
               }}
             >
               <Typography sx={{ fontFamily: '"Playfair Display", serif', color: GOLD, fontSize: '0.75rem' }}>
@@ -58,7 +60,7 @@ export default function ProgramSection() {
               >
                 {p.titleEn}
               </Typography>
-              <Typography variant="body2" sx={{ color: `${CREAM}cc`, mt: 0.3 }}>
+              <Typography variant="body2" sx={{ color: `${CREAM}dd`, mt: 0.3 }}>
                 {p.desc}
               </Typography>
             </Box>

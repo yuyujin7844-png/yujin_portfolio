@@ -6,7 +6,7 @@ import { GOLD, BURGUNDY, CREAM } from '../../theme.js';
  * 언어 규칙: 제목은 영문, 보조 설명은 한글.
  * `dark`(짙은 배경 섹션)에서는 제목을 골드, 보조 설명을 크림톤으로 반전한다.
  */
-export default function SectionTitle({ en, ko, align = 'center', dark = false }) {
+export default function SectionTitle({ en, ko, align = 'left', dark = false }) {
   return (
     <Box sx={{ textAlign: align, mb: { xs: 4, md: 6 } }}>
       <Box

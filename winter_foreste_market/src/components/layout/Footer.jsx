@@ -1,5 +1,5 @@
 import { Box, Container, Typography, Stack, Link as MuiLink } from '@mui/material';
-import { GOLD, DEEP_GREEN, CREAM } from '../../theme.js';
+import { GOLD, DEEP_GREEN, CREAM, CONTENT_MAX_WIDTH, SECTION_PX } from '../../theme.js';
 import { EVENT } from '../../data/eventInfo.js';
 
 const symbolMini = `${import.meta.env.BASE_URL}symbol-mini.svg`;
@@ -7,7 +7,7 @@ const symbolMini = `${import.meta.env.BASE_URL}symbol-mini.svg`;
 export default function Footer() {
   return (
     <Box component="footer" sx={{ backgroundColor: DEEP_GREEN, color: CREAM, py: { xs: 6, md: 8 }, mt: 6 }}>
-      <Container maxWidth="md">
+      <Container disableGutters maxWidth={false} sx={{ maxWidth: CONTENT_MAX_WIDTH, mx: 'auto', px: SECTION_PX }}>
         <Stack spacing={2.5} alignItems="center" textAlign="center">
           <Box component="img" src={symbolMini} alt="Winter Forest Market 심볼" sx={{ width: 48, height: 48, filter: 'brightness(1.6)' }} />
           <Typography sx={{ fontFamily: '"Playfair Display", serif', fontStyle: 'italic', fontSize: '1.3rem', color: GOLD }}>

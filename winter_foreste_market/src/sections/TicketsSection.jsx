@@ -19,7 +19,7 @@ const RULES = [
 
 export default function TicketsSection({ onReserve }) {
   return (
-    <PaperSection id="tickets" maxWidth="md" framed={false} sx={{ backgroundColor: DEEP_GREEN, color: CREAM }}>
+    <PaperSection id="tickets" sx={{ backgroundColor: DEEP_GREEN, color: CREAM }}>
       <SectionTitle
         en="Ticket"
         ko="이 페이지의 핵심입니다. 마음에 드는 티켓을 골라 사전 예약하고, 행사 당일 한정판 머그컵을 받아 가세요."
@@ -28,14 +28,18 @@ export default function TicketsSection({ onReserve }) {
 
       <Box
         sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr 1fr' },
-          gap: { xs: 3, md: 3 },
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          rowGap: 4,
           mb: 6,
         }}
       >
         {MUG_PHOTOS.map((m) => (
-          <Box key={m.key} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5 }}>
+          <Box
+            key={m.key}
+            sx={{ width: { xs: '100%', sm: '30%' }, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5 }}
+          >
             <Box
               component="img"
               src={m.image}

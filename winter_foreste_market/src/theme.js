@@ -16,6 +16,10 @@ const SERIF_KO = '"Nanum Myeongjo", "Playfair Display", serif';
 // 한글 본문은 영문 대비 92% 크기 (0.92em)
 const KO_SCALE = 0.92;
 
+// ── 레이아웃 토큰 — 모든 섹션이 이 값을 기준으로 정렬된다 ──────────
+export const CONTENT_MAX_WIDTH = 1400;
+export const SECTION_PX = { xs: 2.5, md: '60px' };
+
 const theme = createTheme({
   palette: {
     mode: 'light',

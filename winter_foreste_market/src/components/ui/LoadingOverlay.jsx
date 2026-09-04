@@ -1,13 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { keyframes } from '@emotion/react';
+// 중앙 심볼: 글자/다이아몬드 별을 개별 회전시키려 인라인 SVG로 넣는다.
+// (사이트 본문은 assets/symbol-full.svg 를 <img>로 쓰므로 src 쪽에 사본을 둠)
+import symbolRaw from '../../assets/symbol-full.svg?raw';
 
 // ── 로딩 화면 전용 컬러 (본문 테마와 별개, 수정.pages 스펙 값) ──────
 const BURGUNDY_DEEP = '#5b1018'; // 오버레이 배경 (유지)
 const PROGRESS_GOLD = '#b6862d'; // 상단 진행 라인 (유지)
 const PERCENT_CREAM = '#fceedf'; // 퍼센트 숫자 (유지)
 
-const symbolFull = `${import.meta.env.BASE_URL}symbol-full.svg`;
+const SYMBOL_MID = 118.3; // viewBox 236.6 의 중심
+const SYMBOL_TURNS = 2; // 로딩 동안 심볼이 도는 바퀴 수 (100%에서 제자리 복귀)
+const symbolInlineHtml = symbolRaw.replace(/<\?xml[^>]*\?>\s*/i, '');
 
 // ── 타이밍 (ms) ────────────────────────────────────────────────
 const COUNT_MS = 5800; // 0 → 100 카운트업
@@ -168,6 +173,36 @@ export default function LoadingOverlay() {
   const [gone, setGone] = useState(false);
   const timers = useRef([]);
 
+  // 인라인 심볼에서 회전시킬 조각(글자 그룹 + 다이아몬드 별 2개)을 잡아둔다
+  const symbolRef = useRef(null);
+  const spinParts = useRef(null);
+
+  useLayoutEffect(() => {
+    if (reduced) return;
+    const svg = symbolRef.current?.querySelector('svg');
+    const group =
+      svg?.querySelector('#Layer_1-2 > g') || svg?.querySelector('g > g');
+    if (!group) return;
+
+    // 구조: [글자그룹, 안쪽원, 바깥원, 위쪽호글자, 아래호글자, 다이아몬드, 다이아몬드]
+    const kids = group.children;
+    const letters = kids[0] || null;
+    const diamonds = [kids[5], kids[6]].filter(Boolean).map((el) => {
+      let cx = SYMBOL_MID;
+      let cy = SYMBOL_MID;
+      try {
+        const b = el.getBBox();
+        cx = b.x + b.width / 2;
+        cy = b.y + b.height / 2;
+      } catch {
+        /* getBBox 미지원 환경 — 중심 기준으로 폴백 */
+      }
+      return { el, cx, cy };
+    });
+
+    spinParts.current = { letters, diamonds };
+  }, [reduced]);
+
   useEffect(() => {
     if (reduced) {
       setGone(true);
@@ -182,7 +217,25 @@ export default function LoadingOverlay() {
 
     const tick = (now) => {
       const t = Math.min(1, (now - start) / COUNT_MS);
-      setPct(Math.round(countProgress(t) * 100));
+      const prog = countProgress(t);
+      setPct(Math.round(prog * 100));
+
+      // 로딩 진행률에 맞춰 심볼 글자/다이아몬드 별 회전
+      // (진행률 곡선을 그대로 타므로 카운트 속도와 함께 빨라졌다 느려짐)
+      // 100%에서는 SYMBOL_TURNS 바퀴를 정확히 채워 % 360 = 0, 제자리 복귀
+      const parts = spinParts.current;
+      if (parts) {
+        const angle = (prog * SYMBOL_TURNS * 360) % 360;
+        if (parts.letters) {
+          parts.letters.setAttribute(
+            'transform',
+            `rotate(${angle} ${SYMBOL_MID} ${SYMBOL_MID})`
+          );
+        }
+        parts.diamonds.forEach(({ el, cx, cy }) => {
+          el.setAttribute('transform', `rotate(${angle} ${cx} ${cy})`);
+        });
+      }
 
       if (t < 1) {
         raf = requestAnimationFrame(tick);
@@ -318,10 +371,14 @@ export default function LoadingOverlay() {
         }}
       >
         <Box
-          component="img"
-          src={symbolFull}
-          alt="Winter Forest Market in Taehwa 심볼"
-          sx={{ width: { xs: 200, md: 320 }, height: 'auto' }}
+          ref={symbolRef}
+          role="img"
+          aria-label="Winter Forest Market in Taehwa 심볼"
+          dangerouslySetInnerHTML={{ __html: symbolInlineHtml }}
+          sx={{
+            width: { xs: 200, md: 320 },
+            '& svg': { display: 'block', width: '100%', height: 'auto' },
+          }}
         />
         <Typography
           component="p"

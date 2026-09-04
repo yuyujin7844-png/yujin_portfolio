@@ -173,7 +173,8 @@ export default function LoadingOverlay() {
   const [gone, setGone] = useState(false);
   const timers = useRef([]);
 
-  // 인라인 심볼에서 회전시킬 조각(글자 그룹 + 다이아몬드 별 2개)을 잡아둔다
+  // 인라인 심볼에서 회전시킬 조각을 잡아둔다.
+  // 가운데 WFM 글자와 두 개의 원(링)은 고정, 둥근 글자와 다이아몬드 별만 회전.
   const symbolRef = useRef(null);
   const spinParts = useRef(null);
 
@@ -184,23 +185,10 @@ export default function LoadingOverlay() {
       svg?.querySelector('#Layer_1-2 > g') || svg?.querySelector('g > g');
     if (!group) return;
 
-    // 구조: [글자그룹, 안쪽원, 바깥원, 위쪽호글자, 아래호글자, 다이아몬드, 다이아몬드]
+    // 구조: [0 WFM글자, 1 안쪽원, 2 바깥원, 3 위쪽호글자, 4 아래호글자, 5 다이아몬드, 6 다이아몬드]
     const kids = group.children;
-    const letters = kids[0] || null;
-    const diamonds = [kids[5], kids[6]].filter(Boolean).map((el) => {
-      let cx = SYMBOL_MID;
-      let cy = SYMBOL_MID;
-      try {
-        const b = el.getBBox();
-        cx = b.x + b.width / 2;
-        cy = b.y + b.height / 2;
-      } catch {
-        /* getBBox 미지원 환경 — 중심 기준으로 폴백 */
-      }
-      return { el, cx, cy };
-    });
-
-    spinParts.current = { letters, diamonds };
+    // 둥근 글자 2그룹 + 다이아몬드 별 2개 → 모두 심볼 중심 기준으로 함께 회전
+    spinParts.current = [kids[3], kids[4], kids[5], kids[6]].filter(Boolean);
   }, [reduced]);
 
   // 로딩 중에만 본문 스크롤 잠금 — 오버레이가 사라지면(gone) 반드시 원복해
@@ -228,21 +216,15 @@ export default function LoadingOverlay() {
       const prog = countProgress(t);
       setPct(Math.round(prog * 100));
 
-      // 로딩 진행률에 맞춰 심볼 글자/다이아몬드 별 회전
+      // 로딩 진행률에 맞춰 둥근 글자 + 다이아몬드 별을 심볼 중심으로 회전
       // (진행률 곡선을 그대로 타므로 카운트 속도와 함께 빨라졌다 느려짐)
       // 100%에서는 SYMBOL_TURNS 바퀴를 정확히 채워 % 360 = 0, 제자리 복귀
       const parts = spinParts.current;
       if (parts) {
-        const angle = (prog * SYMBOL_TURNS * 360) % 360;
-        if (parts.letters) {
-          parts.letters.setAttribute(
-            'transform',
-            `rotate(${angle} ${SYMBOL_MID} ${SYMBOL_MID})`
-          );
+        const rot = `rotate(${(prog * SYMBOL_TURNS * 360) % 360} ${SYMBOL_MID} ${SYMBOL_MID})`;
+        for (let i = 0; i < parts.length; i += 1) {
+          parts[i].setAttribute('transform', rot);
         }
-        parts.diamonds.forEach(({ el, cx, cy }) => {
-          el.setAttribute('transform', `rotate(${angle} ${cx} ${cy})`);
-        });
       }
 
       if (t < 1) {

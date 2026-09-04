@@ -1,24 +1,154 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { keyframes } from '@emotion/react';
 
-// ── 로딩 화면 전용 컬러 (본문 테마와 별개, 로딩.pages 스펙 값) ──────
-const BURGUNDY_DEEP = '#5b1018'; // 오버레이 배경
-const PROGRESS_GOLD = '#b6862d'; // 상단 진행 라인
-const PERCENT_CREAM = '#fceedf'; // 퍼센트 숫자
+// ── 로딩 화면 전용 컬러 (본문 테마와 별개, 수정.pages 스펙 값) ──────
+const BURGUNDY_DEEP = '#5b1018'; // 오버레이 배경 (유지)
+const PROGRESS_GOLD = '#b6862d'; // 상단 진행 라인 (유지)
+const PERCENT_CREAM = '#fceedf'; // 퍼센트 숫자 (유지)
 
-const snowflake = `${import.meta.env.BASE_URL}snowflake.svg`;
 const symbolFull = `${import.meta.env.BASE_URL}symbol-full.svg`;
 
 // ── 타이밍 (ms) ────────────────────────────────────────────────
-const COUNT_MS = 1400; // 0 → 100 카운트업
-const HOLD_MS = 300; // 100% 도달 후 대기
-const FADE_MS = 600; // 오버레이 페이드아웃
+const COUNT_MS = 5800; // 0 → 100 카운트업
+const HOLD_MS = 1000; // 100% 도달 후 대기
+const FADE_MS = 800; // 오버레이 페이드아웃 (총 7.6초)
 
-// 눈송이/광원 레이어의 느린 깜빡임 — snowflake.svg 자체 투명도에 곱해짐
-const twinkle = keyframes`
-  0%, 100% { opacity: 0.42; }
-  50%      { opacity: 0.85; }
+// ── 카운트 속도 곡선 ──────────────────────────────────────────
+// 0~70% 빠르게 → 70~95% 느리게 → 95~100% 다시 빠르게 (구간별 ease-out)
+const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
+function countProgress(t) {
+  if (t <= 0) return 0;
+  if (t >= 1) return 1;
+  if (t < 0.35) return 0.7 * easeOutCubic(t / 0.35); // 빠르게 70까지
+  if (t < 0.9) return 0.7 + 0.25 * ((t - 0.35) / 0.55); // 느린 크롤 70→95
+  return 0.95 + 0.05 * easeOutCubic((t - 0.9) / 0.1); // 95→100 스냅
+}
+
+// ── 눈송이 SVG (19세기 판화풍 육각 결정, 6방향 대칭 · 가는 선 위주) ──
+// 한 팔(arm) 경로만 정의하고 60°씩 6번 회전해 사용
+const ARM_PATHS = [
+  // 0 — 단순
+  ['M50 50V14', 'M50 22l-6-5M50 22l6-5', 'M50 32l-4.5-4M50 32l4.5-4'],
+  // 1 — 중간
+  ['M50 50V10', 'M50 16l-8-6M50 16l8-6', 'M50 26l-6-5M50 26l6-5', 'M50 36l-4-3.5M50 36l4-3.5'],
+  // 2 — 복잡
+  [
+    'M50 50V8',
+    'M50 13l-9-6M50 13l9-6',
+    'M50 22l-7-5M50 22l7-5',
+    'M50 22l-4 4M50 22l4 4',
+    'M50 32l-6-4M50 32l6-4',
+    'M50 41l-3.5-3M50 41l3.5-3',
+    'M50 6l-2.2 3.5l2.2 3.5l2.2-3.5Z',
+  ],
+  // 3 — 장식적
+  [
+    'M50 50V6',
+    'M50 12l-9-6M50 12l9-6',
+    'M41 6l2 4M59 6l-2 4',
+    'M50 20l-8-5M50 20l8-5',
+    'M50 28l-5.5-4M50 28l5.5-4',
+    'M50 28l-4 4M50 28l4 4',
+    'M50 37l-5-3.5M50 37l5-3.5',
+    'M50 44l-3-2.5M50 44l3-2.5',
+    'M50 4l-3 5l3 5l3-5Z',
+  ],
+];
+const CENTER_HEX = 'M56 50L53 55.2L47 55.2L44 50L47 44.8L53 44.8Z';
+
+function Snowflake({ variant }) {
+  const paths = ARM_PATHS[variant] || ARM_PATHS[0];
+  return (
+    <Box
+      component="svg"
+      viewBox="0 0 100 100"
+      aria-hidden
+      focusable="false"
+      sx={{ display: 'block', width: '100%', height: '100%', overflow: 'visible' }}
+    >
+      <g
+        fill="none"
+        stroke="#fff"
+        strokeWidth={1.3}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {[0, 60, 120, 180, 240, 300].map((deg) => (
+          <g key={deg} transform={`rotate(${deg} 50 50)`}>
+            {paths.map((d, i) => (
+              <path key={i} d={d} />
+            ))}
+          </g>
+        ))}
+        {(variant === 1 || variant === 3) && <path d={CENTER_HEX} />}
+      </g>
+    </Box>
+  );
+}
+
+// ── 배치 데이터 생성 (애니메이션은 전부 CSS, JS는 위치/타이밍 값만) ──
+function buildFlakes() {
+  const count = 24 + Math.floor(Math.random() * 9); // 24~32개
+  // 가장자리로 값을 밀어내는 분포
+  const edgeBias = (v) =>
+    v < 0.5 ? 0.5 * Math.pow(v * 2, 1.7) : 1 - 0.5 * Math.pow((1 - v) * 2, 1.7);
+
+  const flakes = [];
+  let guard = 0;
+  while (flakes.length < count && guard < count * 40) {
+    guard += 1;
+    const x = edgeBias(Math.random()) * 100;
+    const y = edgeBias(Math.random()) * 100;
+    // 중앙 심볼 주변(타원 영역)은 비워둔다
+    const dx = (x - 50) / 30;
+    const dy = (y - 50) / 34;
+    if (dx * dx + dy * dy < 1) continue;
+    flakes.push({
+      x,
+      y,
+      size: 10 + Math.random() * 46, // 10~56px
+      base: 0.06 + Math.random() * 0.08, // 6~14%
+      dur: 3 + Math.random() * 4, // 3~7초
+      delay: Math.random() * 5, // 0~5초
+      rot: Math.random() * 60,
+      variant: Math.floor(Math.random() * 4),
+      spin: false,
+    });
+  }
+  // 5~6개만 아주 느린 미세 회전
+  const spinCount = Math.min(5 + Math.round(Math.random()), flakes.length);
+  const pool = [...flakes.keys()];
+  for (let i = 0; i < spinCount; i += 1) {
+    const k = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+    flakes[k].spin = true;
+  }
+  return flakes;
+}
+
+function buildOrbs() {
+  return Array.from({ length: 10 }, () => ({
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: 40 + Math.random() * 100, // 40~140px
+    base: 0.04 + Math.random() * 0.05, // 4~9%
+    dur: 8 + Math.random() * 4, // 8~12초
+    delay: Math.random() * 6,
+  }));
+}
+
+// ── 키프레임 (opacity / transform 만 사용) ─────────────────────
+const flakeTwinkle = keyframes`
+  0%, 100% { opacity: var(--o); }
+  50%      { opacity: calc(var(--o) * 2.5); }
+`;
+const flakeSpin = keyframes`
+  0%, 100% { transform: rotate(calc(var(--r) * 1deg - 8deg)); }
+  50%      { transform: rotate(calc(var(--r) * 1deg + 8deg)); }
+`;
+const orbTwinkle = keyframes`
+  0%, 100% { opacity: var(--o); }
+  50%      { opacity: calc(var(--o) * 2); }
 `;
 
 export default function LoadingOverlay() {
@@ -29,6 +159,9 @@ export default function LoadingOverlay() {
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
+
+  const flakes = useMemo(buildFlakes, []);
+  const orbs = useMemo(buildOrbs, []);
 
   const [pct, setPct] = useState(0);
   const [fading, setFading] = useState(false);
@@ -41,7 +174,6 @@ export default function LoadingOverlay() {
       return;
     }
 
-    // 로딩 중에는 본문 스크롤 잠금
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
@@ -49,14 +181,13 @@ export default function LoadingOverlay() {
     const start = performance.now();
 
     const tick = (now) => {
-      const progress = Math.min(1, (now - start) / COUNT_MS);
-      setPct(Math.round(progress * 100));
+      const t = Math.min(1, (now - start) / COUNT_MS);
+      setPct(Math.round(countProgress(t) * 100));
 
-      if (progress < 1) {
+      if (t < 1) {
         raf = requestAnimationFrame(tick);
         return;
       }
-      // 100% 도달 → 대기 후 페이드아웃 → DOM 제거
       timers.current.push(
         setTimeout(() => {
           setFading(true);
@@ -98,42 +229,70 @@ export default function LoadingOverlay() {
         transition: `opacity ${FADE_MS}ms ease`,
       }}
     >
-      {/* 눈송이 + 흐릿한 원형 광원 배경 — snowflake.svg 를 그대로 사용,
-          서로 다른 주기/딜레이의 두 레이어로 겹쳐 동시에 깜빡이지 않게 함 */}
-      <Box
-        aria-hidden
-        component="img"
-        src={snowflake}
-        alt=""
-        sx={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          opacity: 0.55,
-          animation: `${twinkle} 7s ease-in-out infinite`,
-        }}
-      />
-      <Box
-        aria-hidden
-        component="img"
-        src={snowflake}
-        alt=""
-        sx={{
-          position: 'absolute',
-          top: '-6%',
-          left: '-6%',
-          width: '112%',
-          height: '112%',
-          objectFit: 'cover',
-          opacity: 0.4,
-          transform: 'scaleX(-1)',
-          animation: `${twinkle} 4.5s ease-in-out 1.2s infinite`,
-        }}
-      />
+      {/* 흐릿한 원형 광원 10개 */}
+      {orbs.map((o, i) => (
+        <Box
+          key={`orb-${i}`}
+          aria-hidden
+          sx={{
+            position: 'absolute',
+            left: `${o.x}%`,
+            top: `${o.y}%`,
+            width: o.size,
+            height: o.size,
+            ml: `${-o.size / 2}px`,
+            mt: `${-o.size / 2}px`,
+            borderRadius: '50%',
+            background:
+              'radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 70%)',
+            filter: `blur(${Math.round(o.size / 12)}px)`,
+            opacity: o.base,
+            '--o': o.base,
+            willChange: 'opacity',
+            animation: `${orbTwinkle} ${o.dur}s ease-in-out ${o.delay}s infinite`,
+          }}
+        />
+      ))}
 
-      {/* 상단에서 40px 지점, 화면 전체 폭의 가로 진행 라인 (퍼센트와 동기화) */}
+      {/* 눈송이 24~32개 — 가장자리에 더 많이, 중앙은 비움 */}
+      {flakes.map((f, i) => (
+        <Box
+          key={`flake-${i}`}
+          aria-hidden
+          sx={{
+            position: 'absolute',
+            left: `${f.x}%`,
+            top: `${f.y}%`,
+            width: f.size,
+            height: f.size,
+            ml: `${-f.size / 2}px`,
+            mt: `${-f.size / 2}px`,
+            opacity: f.base,
+            '--o': f.base,
+            willChange: 'opacity',
+            animation: `${flakeTwinkle} ${f.dur}s ease-in-out ${f.delay}s infinite`,
+          }}
+        >
+          <Box
+            sx={{
+              width: '100%',
+              height: '100%',
+              transformOrigin: 'center',
+              '--r': f.rot,
+              ...(f.spin
+                ? {
+                    willChange: 'transform',
+                    animation: `${flakeSpin} 20s ease-in-out ${f.delay}s infinite`,
+                  }
+                : { transform: `rotate(${f.rot}deg)` }),
+            }}
+          >
+            <Snowflake variant={f.variant} />
+          </Box>
+        </Box>
+      ))}
+
+      {/* 상단에서 40px 지점, 화면 전체 폭의 가로 진행 라인 (현재 그대로) */}
       <Box
         aria-hidden
         sx={{
@@ -147,10 +306,11 @@ export default function LoadingOverlay() {
         }}
       />
 
-      {/* 중앙: 심볼 + 퍼센트 숫자 */}
+      {/* 중앙: 심볼 + 퍼센트 숫자 (현재 그대로) */}
       <Box
         sx={{
           position: 'relative',
+          zIndex: 1,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',

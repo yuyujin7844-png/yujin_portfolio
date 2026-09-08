@@ -7,6 +7,7 @@ React + MUI + Supabase 실습 프로젝트 모음. 한 저장소 안에 여러 �
 | 프로젝트 | URL | 설명 |
 |---|---|---|
 | 랜딩페이지 | <https://yuyujin7844-png.github.io/yujin_portfolio/> | 각 프로젝트로 가는 인덱스 |
+| 2026 Portfolio (별도 저장소) | <https://yuyujin7844-png.github.io/2026_portfolio/> | Yujin 개인 포트폴리오 사이트 ([yuyujin7844-png/2026_portfolio](https://github.com/yuyujin7844-png/2026_portfolio)) |
 | Moviestagram (`mini_sns`) | <https://yuyujin7844-png.github.io/yujin_portfolio/mini_sns/> | 영화·공연 감상 공유 미니 SNS |
 | Bloom Champagne (`Bloom_Champagne`) | <https://yuyujin7844-png.github.io/yujin_portfolio/Bloom_Champagne/> | 논알코올 스파클링 브랜드 랜딩페이지 |
 | Winter Forest Market (`winter_foreste_market`) | <https://yuyujin7844-png.github.io/yujin_portfolio/winter_foreste_market/> | 태화강 국가정원 크리스마스 마켓 행사 랜딩페이지 |

@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ModeComment';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { supabase } from '../supabase';
+import { resolvePostImage } from '../lib/movieImage';
 import CommentModal from './CommentModal';
 
 function timeAgo(ts) {
@@ -57,7 +58,7 @@ export default function PostCard({ post }) {
         />
         <CardMedia
           component="img"
-          image={post.image_url || `https://picsum.photos/seed/${post.id}/400/400`}
+          image={resolvePostImage(post.image_url, post.id)}
           alt="post image"
           sx={{ width: '100%', aspectRatio: '1/1', objectFit: 'cover' }}
         />

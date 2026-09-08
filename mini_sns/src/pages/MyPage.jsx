@@ -8,6 +8,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import { useAuth } from '../context/AuthContext';
+import { resolvePostImage } from '../lib/movieImage';
 import PostCard from '../components/PostCard';
 
 export default function MyPage() {
@@ -109,7 +110,7 @@ export default function MyPage() {
               >
                 <Box
                   component="img"
-                  src={post.image_url}
+                  src={resolvePostImage(post.image_url, post.id)}
                   alt="post thumbnail"
                   sx={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.05)' } }}
                 />

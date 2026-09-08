@@ -9,6 +9,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { supabase } from '../supabase';
 import { useAuth } from '../context/AuthContext';
+import { movieImage } from '../lib/movieImage';
 
 const CATEGORIES = ['영화', '공연', '뮤지컬', '연극', '오페라', '콘서트', '전시'];
 
@@ -28,7 +29,7 @@ export default function CreatePostPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const imageUrl = `https://picsum.photos/seed/${seed}/400/400`;
+  const imageUrl = movieImage(seed);
 
   const handleTagKeyDown = (e) => {
     if (e.key === 'Enter' && tagInput.trim()) {

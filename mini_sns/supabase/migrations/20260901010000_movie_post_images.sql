@@ -1,0 +1,12 @@
+-- 게시물 이미지를 picsum.photos -> movie 테마 Unsplash 이미지로 교체
+-- (환경에 따라 picsum.photos 가 차단되어 이미지가 깨지는 문제 해결)
+update public.ms_posts set image_url = 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80' where image_url = 'https://picsum.photos/seed/ms_dune3/400/400';
+update public.ms_posts set image_url = 'https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=800&q=80' where image_url = 'https://picsum.photos/seed/ms_phantom/400/400';
+update public.ms_posts set image_url = 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80' where image_url = 'https://picsum.photos/seed/ms_insideout3/400/400';
+update public.ms_posts set image_url = 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80' where image_url = 'https://picsum.photos/seed/ms_lionking/400/400';
+update public.ms_posts set image_url = 'https://images.unsplash.com/photo-1594908900066-3f47337549d8?auto=format&fit=crop&w=800&q=80' where image_url = 'https://picsum.photos/seed/ms_kubrick/400/400';
+update public.ms_posts set image_url = 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&w=800&q=80' where image_url = 'https://picsum.photos/seed/ms_hamlet/400/400';
+update public.ms_posts set image_url = 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80' where image_url = 'https://picsum.photos/seed/ms_spiderman/400/400';
+update public.ms_posts set image_url = 'https://images.unsplash.com/photo-1514533212735-5df27d970db0?auto=format&fit=crop&w=800&q=80' where image_url = 'https://picsum.photos/seed/ms_traviata/400/400';
+update public.ms_posts set image_url = 'https://images.unsplash.com/photo-1512070679279-8988d32161be?auto=format&fit=crop&w=800&q=80' where image_url = 'https://picsum.photos/seed/ms_nanta/400/400';
+update public.ms_posts set image_url = 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80' where image_url = 'https://picsum.photos/seed/ms_wicked/400/400';

@@ -1,4 +1,4 @@
-import ViewMoreButton from '../components/common/ViewMoreButton'
+import ViewMoreButton from '../../components/common/ViewMoreButton'
 
 const NEWS = [
   { title: '아르케 로보틱스, 휴머노이드 ‘KINESIS’ 자동차 부품 공장 실증 테스트 착수', date: '26.10.08' },

@@ -1,5 +1,5 @@
-import SectionTitle from '../components/common/SectionTitle'
-import { asset } from '../utils/asset'
+import SectionTitle from '../../components/common/SectionTitle'
+import { asset } from '../../utils/asset'
 
 const PRODUCTS = [
   { name: 'KINESIS', desc: 'Humanoid Robot', image: 'business1.webp' },

@@ -23,18 +23,38 @@
 
 콘텐츠 폭은 `.container-content`(max-width 1440 + 좌우 20px) 유틸리티로 통일합니다.
 
-## 섹션 구성
+## 페이지 구성
+
+Vite 멀티 페이지로 빌드합니다 (`vite.config.js`의 `rollupOptions.input`).
+
+| 페이지 | URL | 엔트리 | 피그마 |
+|---|---|---|---|
+| 메인 | `/arkhe_robotics/` | `index.html` → `src/main.jsx` → `pages/MainPage.jsx` | node 170-306 |
+| 회사소개 | `/arkhe_robotics/company/` | `company/index.html` → `src/company.jsx` → `pages/CompanyPage.jsx` | node 179-518 |
+
+헤더 GNB의 Company, 플로팅 메뉴의 회사소개서가 회사소개 페이지로 연결됩니다.
+
+## 섹션 구성 (메인)
 
 | # | 섹션 | 파일 |
 |---|---|---|
-| 1 | Hero — The Beginning of Physical AI | `sections/HeroSection.jsx` |
-| 2 | Business — 4개 제품 라인업 | `sections/BusinessSection.jsx` |
-| 3 | Core Technology — NOUS 원형 다이어그램 | `sections/CoreTechSection.jsx` |
-| 4 | Arkhe in Numbers — 성과 지표 | `sections/NumbersSection.jsx` |
-| 5 | Newsroom — 최신 소식 | `sections/NewsroomSection.jsx` |
-| 6 | Contact / Career | `sections/ContactCareerSection.jsx` |
+| 1 | Hero — The Beginning of Physical AI | `sections/main/HeroSection.jsx` |
+| 2 | Business — 4개 제품 라인업 | `sections/main/BusinessSection.jsx` |
+| 3 | Core Technology — NOUS 원형 다이어그램 | `sections/main/CoreTechSection.jsx` |
+| 4 | Arkhe in Numbers — 성과 지표 | `sections/main/NumbersSection.jsx` |
+| 5 | Newsroom — 최신 소식 | `sections/main/NewsroomSection.jsx` |
+| 6 | Contact / Career | `sections/main/ContactCareerSection.jsx` |
 
-공통 레이아웃: `Header`, `Footer`, `FloatingMenu`(우측 퀵메뉴)
+### 회사소개 (`sections/company/`)
+
+| # | 섹션 | 파일 |
+|---|---|---|
+| 1 | Hero — 사람과 로봇이 함께 일하는 내일의 시작 | `CompanyHero.jsx` |
+| 2 | 만물의 근원을 묻다 (Why ARKHE) | `WhyArkheSection.jsx` |
+| 3 | Core Values — 정밀함 / 협력 / 진화 (hover 시 설명 노출) | `CoreValuesSection.jsx` |
+| 4 | History — 사옥 이미지 + 연혁 (패널 내부 스크롤) | `HistorySection.jsx` |
+
+공통 레이아웃: `Header`(active 메뉴), `Footer`(tone: dark/light), `FloatingMenu`(우측 퀵메뉴)
 
 ## 실행
 

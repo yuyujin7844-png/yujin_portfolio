@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
 import { asset } from '../../utils/asset'
+import { COMPANY, HOME, homeSection } from '../../utils/links'
 
 const NAV_ITEMS = [
-  { label: 'Company', href: '#contact' },
-  { label: 'Technology', href: '#technology' },
-  { label: 'Product', href: '#business' },
-  { label: 'Industry', href: '#numbers' },
-  { label: 'IR/PR', href: '#newsroom' },
+  { label: 'Company', href: COMPANY },
+  { label: 'Technology', href: homeSection('technology') },
+  { label: 'Product', href: homeSection('business') },
+  { label: 'Industry', href: homeSection('numbers') },
+  { label: 'IR/PR', href: homeSection('newsroom') },
 ]
 
-function Header() {
+// active: 현재 페이지 메뉴 라벨 (피그마 sub 페이지에서 Company가 빨간색)
+function Header({ active }) {
   const [scrolled, setScrolled] = useState(false)
   const [lang, setLang] = useState('KOR')
 
@@ -29,7 +31,7 @@ function Header() {
       }`}
     >
       <div className="container-content relative flex h-full items-center justify-between">
-        <a href="#top" className="font-unbounded text-[30px] font-medium text-gray-250">
+        <a href={HOME} className="font-unbounded text-[30px] font-medium text-gray-250">
           ARKHE
         </a>
 
@@ -39,7 +41,10 @@ function Header() {
             <a
               key={item.label}
               href={item.href}
-              className="font-unbounded text-[16px] font-normal text-gray-250 transition-colors hover:text-brand"
+              aria-current={active === item.label ? 'page' : undefined}
+              className={`font-unbounded text-[16px] font-normal transition-colors hover:text-brand ${
+                active === item.label ? 'text-brand' : 'text-gray-250'
+              }`}
             >
               {item.label}
             </a>

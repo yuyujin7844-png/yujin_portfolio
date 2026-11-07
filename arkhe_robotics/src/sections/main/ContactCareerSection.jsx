@@ -1,4 +1,4 @@
-import { asset } from '../utils/asset'
+import { asset } from '../../utils/asset'
 
 // 피그마 card_Contact(오버레이 노출 상태) / card_Career(default → hover 시 오버레이)
 const CARDS = [

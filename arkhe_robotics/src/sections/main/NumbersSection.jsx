@@ -1,5 +1,5 @@
-import SectionTitle from '../components/common/SectionTitle'
-import { asset } from '../utils/asset'
+import SectionTitle from '../../components/common/SectionTitle'
+import { asset } from '../../utils/asset'
 
 const STATS = [
   { label: '보유 특허', value: '186', unit: 'plus', size: 'text-[100px]' },

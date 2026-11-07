@@ -1,10 +1,11 @@
 import { asset } from '../../utils/asset'
+import { COMPANY, homeSection } from '../../utils/links'
 
 // 피그마 "플러팅 메뉴" (112 x 449, 우측 고정)
 const QUICK_MENU = [
-  { label: '도입 문의', icon: 'floating-contact', href: '#contact', text: 'text-[14px]' },
-  { label: '회사소개서', icon: 'floating-company', href: '#technology', text: 'text-[14px]' },
-  { label: '채용', icon: 'floating-career', href: '#career', text: 'text-[16px]' },
+  { label: '도입 문의', icon: 'floating-contact', href: homeSection('contact'), text: 'text-[14px]' },
+  { label: '회사소개서', icon: 'floating-company', href: COMPANY, text: 'text-[14px]' },
+  { label: '채용', icon: 'floating-career', href: homeSection('career'), text: 'text-[16px]' },
 ]
 
 function FloatingMenu() {

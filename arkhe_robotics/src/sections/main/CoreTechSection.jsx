@@ -1,6 +1,6 @@
-import ViewMoreButton from '../components/common/ViewMoreButton'
-import SectionTitle from '../components/common/SectionTitle'
-import { asset } from '../utils/asset'
+import ViewMoreButton from '../../components/common/ViewMoreButton'
+import SectionTitle from '../../components/common/SectionTitle'
+import { asset } from '../../utils/asset'
 
 // NOUS 순환 다이어그램 (888 x 848) 위 노드 좌표 — 피그마 값 그대로
 const STEPS = [

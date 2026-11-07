@@ -25,11 +25,15 @@ export default {
           600: '#8C9099', // 토글 배경
           650: '#8A8A93', // 사업 카드 서브텍스트
           700: '#6C6C77', // 뉴스룸 설명
+          750: '#4B4B4B', // 연혁 since
+          // Company 페이지
+          225: '#D1D4DA', // Why ARKHE 본문
         },
         surface: {
           black: '#000000',
           900: '#0A0A0B',
           800: '#181818',
+          card: '#000001', // 핵심가치 카드 배경
         },
       },
       fontFamily: {
@@ -40,6 +44,10 @@ export default {
         content: '1440px', // 1920 - 마진 240 * 2
       },
       backgroundImage: {
+        'section-company':
+          'linear-gradient(180deg, #1D1D20 0%, #54565D 18.75%, #FFFFFF 86.538%, #FFFFFF 100%)',
+        'history-fade':
+          'linear-gradient(180deg, rgba(247,247,247,0) 0%, rgba(229,229,223,0.5) 50%, #D5D5D4 100%)',
         'section-business': 'linear-gradient(180deg, #000000 0%, #0A0A0B 100%)',
         'section-tech': 'linear-gradient(180deg, #0A0A0B 0%, #181818 100%)',
         'section-bottom':

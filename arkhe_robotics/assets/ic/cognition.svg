@@ -1,6 +1,8 @@
-<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.8571 22.0857H8V8H22.92V10.8571H10.8571V22.0857Z" fill="#F0F1F3"/>
-<path d="M72.4116 22.0857H69.5544V10.8571H57.4858V8H72.4116V22.0857Z" fill="#F0F1F3"/>
-<path d="M22.92 72.4114H8V58.3257H10.8571V69.5543H22.92V72.4114Z" fill="#F0F1F3"/>
-<path d="M72.4116 72.4114H57.4858V69.5543H69.5544V58.6914H72.4116V72.4114Z" fill="#F0F1F3"/>
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="64.4114" height="64.4114" viewBox="0 0 64.4114 64.4114" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group">
+<path id="Vector" d="M2.85714 14.0857H0V0H14.92V2.85714H2.85714V14.0857Z" fill="#F0F1F3"/>
+<path id="Vector_2" d="M64.4114 14.0857H61.5543V2.85714H49.4857V0H64.4114V14.0857Z" fill="#F0F1F3"/>
+<path id="Vector_3" d="M14.92 64.4114H0V50.3257H2.85714V61.5543H14.92V64.4114Z" fill="#F0F1F3"/>
+<path id="Vector_4" d="M64.4114 64.4114H49.4857V61.5543H61.5543V50.6914H64.4114V64.4114Z" fill="#F0F1F3"/>
+</g>
 </svg>

@@ -1,36 +1,42 @@
-* {
-  box-sizing: border-box;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* 피그마 텍스트는 line-height: normal 기준 */
+    line-height: normal;
+    scroll-behavior: smooth;
+    scroll-padding-top: 98px;
+  }
+
+  body {
+    @apply bg-black font-pretendard text-gray-250 antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-brand text-white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #000;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2c2d30;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f81d21;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  background-color: #000;
-}
-
-img {
-  display: block;
-  max-width: 100%;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #000;
-}
-::-webkit-scrollbar-thumb {
-  background: #2c2d30;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #f81d21;
+@layer components {
+  /* 1440 콘텐츠 폭 + 좁은 화면 좌우 여백 */
+  .container-content {
+    @apply mx-auto w-full max-w-[1480px] px-5;
+  }
 }

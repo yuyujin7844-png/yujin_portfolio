@@ -1,104 +1,53 @@
-import Box from '@mui/material/Box'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
+import { asset } from '../../utils/asset'
 
-const BASE = import.meta.env.BASE_URL
-
+// 피그마 "플러팅 메뉴" (112 x 449, 우측 고정)
 const QUICK_MENU = [
-  { label: '도입 문의', icon: 'floating1.svg', hover: 'floating1_hover.svg', href: '#contact' },
-  { label: '회사소개서', icon: 'floating2.svg', hover: 'floating2_hover.svg', href: '#company' },
-  { label: '채용', icon: 'floating3.svg', hover: 'floating3_hover.svg', href: '#career' },
+  { label: '도입 문의', icon: 'floating-contact', href: '#contact', text: 'text-[14px]' },
+  { label: '회사소개서', icon: 'floating-company', href: '#technology', text: 'text-[14px]' },
+  { label: '채용', icon: 'floating-career', href: '#career', text: 'text-[16px]' },
 ]
 
 function FloatingMenu() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
-    <Stack
-      spacing={1.5}
-      alignItems="center"
-      sx={{
-        position: 'fixed',
-        right: { xs: 12, lg: 24 },
-        bottom: { xs: 20, lg: 40 },
-        zIndex: 1200,
-        p: 1.5,
-        borderRadius: 6,
-        bgcolor: 'rgba(24,25,27,0.92)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        backdropFilter: 'blur(8px)',
-      }}
-    >
-      {QUICK_MENU.map((item) => (
-        <Box
-          key={item.label}
-          component="a"
-          href={item.href}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 0.5,
-            '&:hover .arkhe-ic-default': { opacity: 0 },
-            '&:hover .arkhe-ic-hover': { opacity: 1 },
-            '&:hover .arkhe-ic-label': { color: 'primary.main' },
-          }}
-        >
-          <Box sx={{ position: 'relative', width: 44, height: 44 }}>
-            <Box
-              className="arkhe-ic-default"
-              component="img"
-              src={`${BASE}ic/${item.icon}`}
-              alt={item.label}
-              sx={{ position: 'absolute', inset: 0, width: '100%', height: '100%', transition: 'opacity 0.2s ease' }}
-            />
-            <Box
-              className="arkhe-ic-hover"
-              component="img"
-              src={`${BASE}ic/${item.hover}`}
-              alt=""
-              aria-hidden
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                opacity: 0,
-                transition: 'opacity 0.2s ease',
-                borderRadius: '50%',
-                bgcolor: '#F2F3F4',
-              }}
-            />
-          </Box>
-          <Typography
-            className="arkhe-ic-label"
-            variant="caption"
-            sx={{ fontSize: '0.625rem', color: 'text.secondary', transition: 'color 0.2s ease' }}
-          >
-            {item.label}
-          </Typography>
-        </Box>
-      ))}
+    <aside className="fixed right-4 top-1/2 z-40 hidden h-[449px] w-[112px] -translate-y-1/2 rounded-[10px] bg-[rgba(109,109,109,0.3)] pt-[23px] md:block min-[1920px]:right-[105px]">
+      <ul className="flex flex-col items-center gap-[14px]">
+        {QUICK_MENU.map((item) => (
+          <li key={item.label}>
+            <a href={item.href} className="group flex flex-col items-center">
+              <span className="relative block size-[74px]">
+                <img
+                  src={asset(`ic/${item.icon}.svg`)}
+                  alt=""
+                  width="74"
+                  height="74"
+                  className="absolute inset-0 transition-opacity duration-200 group-hover:opacity-0"
+                />
+                <img
+                  src={asset(`ic/${item.icon}-hover.svg`)}
+                  alt=""
+                  width="74"
+                  height="74"
+                  className="absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                />
+              </span>
+              <span className={`mt-[2px] ${item.text} font-normal text-gray-250`}>{item.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
 
-      <Box
-        component="button"
+      {/* up: 74px 슬롯, SVG는 그림자 포함 90px */}
+      <button
         type="button"
         onClick={scrollToTop}
         aria-label="맨 위로"
-        sx={{
-          width: 48,
-          height: 48,
-          p: 0,
-          border: 0,
-          background: 'none',
-          cursor: 'pointer',
-          '& img': { width: '100%', height: '100%', transition: 'transform 0.2s ease' },
-          '&:hover img': { transform: 'translateY(-3px)' },
-        }}
+        className="absolute left-[19px] top-[360px] size-[74px] transition-transform duration-200 hover:-translate-y-[3px]"
       >
-        <Box component="img" src={`${BASE}ic/floating_up.svg`} alt="" aria-hidden />
-      </Box>
-    </Stack>
+        <img src={asset('ic/floating-up.svg')} alt="" width="90" height="90" className="absolute -left-[8px] -top-[8px] max-w-none" />
+      </button>
+    </aside>
   )
 }
 

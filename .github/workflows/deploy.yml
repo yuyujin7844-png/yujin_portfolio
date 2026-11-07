@@ -50,6 +50,12 @@ jobs:
           npm install
           npm run build
 
+      - name: Build Somtoday
+        working-directory: ./Somtoday
+        run: |
+          npm install
+          npm run build
+
       - name: Assemble Pages site
         run: |
           mkdir -p pages-dist
@@ -58,6 +64,7 @@ jobs:
           cp -r Bloom_Champagne/dist pages-dist/Bloom_Champagne
           cp -r winter_foreste_market/dist pages-dist/winter_foreste_market
           cp -r arkhe_robotics/dist pages-dist/arkhe_robotics
+          cp -r Somtoday/dist pages-dist/Somtoday
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

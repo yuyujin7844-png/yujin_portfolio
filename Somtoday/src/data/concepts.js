@@ -1,0 +1,51 @@
+// 스튜디오 컨셉 카드 — 이미지 크롭 값(img)은 피그마 프레임(625×471) 기준 px
+export const CONCEPTS = [
+  {
+    no: '01',
+    title: '장난감 마을',
+    desc: '알록달록 사랑스러운 장난감 마을. 즐겁게 노는 우리 아이의 자연스러운 놀이 모습을 담습니다.',
+    image: 'img/concept-toy.webp',
+    img: { left: -2.69, top: 0, width: 630.54, height: 470.75 },
+    fade: '#F3E2DC',
+  },
+  {
+    no: '02',
+    title: '아침 침대',
+    desc: '하루밤 자고 나면 자라 있는 우리 아이. 내일은 볼 수 없는 현재의 우리 아이의 모습을 담습니다.',
+    image: 'img/concept-bed.webp',
+    img: { left: -51.25, top: -17.36, width: 676.86, height: 505.33 },
+    fade: '#CEC4BB',
+  },
+  {
+    no: '03',
+    title: '꼬마 요리사',
+    desc: '오늘은 주방의 주인은 우리 아이! 가족을 위해 요리하는 행복한 아이의 모습을 담습니다.',
+    image: 'img/concept-kitchen.webp',
+    img: { left: -90.78, top: -38.72, width: 783.87, height: 525.89 },
+    fade: '#ECE5E3',
+  },
+  {
+    no: '04',
+    title: '바깥 놀이터(야외)',
+    desc: '알록달록 사랑스러운 장난감 마을. 즐겁게 노는 우리 아이의 자연스러운 놀이 모습을 담습니다.',
+    image: 'img/concept-playground.webp',
+    img: { left: -48.06, top: -12.68, width: 720.65, height: 483.48 },
+    fade: '#A49466',
+  },
+  {
+    no: '05',
+    title: '동화 마을',
+    desc: '알록달록 그림책에 빠져드는 곳. 집중하는 표정의 우리 아이의 모습을 담습니다.',
+    image: 'img/concept-reading.webp',
+    img: { left: -13.35, top: -30.71, width: 656.57, height: 490.18 },
+    fade: '#BDB9B9',
+  },
+  {
+    no: '06',
+    title: '아티스트',
+    desc: '아이의 꿈과 생각을 표현하는 곳. 자유표현을 하는 우리 아이의 모습을 담습니다.',
+    image: 'img/concept-artist.webp',
+    img: { left: -16.02, top: -9.35, width: 656.57, height: 490.18 },
+    fade: '#D6D5D5',
+  },
+];

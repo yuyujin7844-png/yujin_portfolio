@@ -39,22 +39,36 @@ function Header() {
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
       }}
     >
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
-        <Logo />
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: '1fr auto 1fr',
+          alignItems: 'center',
+          width: '100%',
+        }}
+      >
+        <Box sx={{ justifySelf: 'start' }}>
+          <Logo size="30px" />
+        </Box>
 
+        {/* gnb: 그리드 중앙 컬럼에 배치해 좌우 요소 폭과 무관하게 항상 가운데 정렬 */}
         <Stack
           component="nav"
           direction="row"
-          spacing={{ md: 3, lg: 5 }}
-          sx={{ display: { xs: 'none', md: 'flex' } }}
+          sx={{
+            justifySelf: 'center',
+            columnGap: '60px',
+            display: { xs: 'none', md: 'flex' },
+          }}
         >
           {NAV_ITEMS.map((item) => (
             <Typography
               key={item.label}
               component="a"
               href={item.href}
-              variant="subtitle2"
               sx={{
+                fontSize: '16px',
+                fontWeight: 500,
                 color: 'text.primary',
                 position: 'relative',
                 '&:hover': { color: 'primary.main' },
@@ -71,6 +85,7 @@ function Header() {
           tabIndex={0}
           onClick={() => setLang((prev) => (prev === 'KOR' ? 'ENG' : 'KOR'))}
           sx={{
+            justifySelf: 'end',
             display: 'flex',
             alignItems: 'center',
             gap: 1,
@@ -89,7 +104,7 @@ function Header() {
             {lang}
           </Typography>
         </Box>
-      </Stack>
+      </Box>
     </Box>
   )
 }

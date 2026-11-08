@@ -56,6 +56,12 @@ jobs:
           npm install
           npm run build
 
+      - name: Build leucos
+        working-directory: ./leucos
+        run: |
+          npm install
+          npm run build
+
       - name: Assemble Pages site
         run: |
           mkdir -p pages-dist
@@ -65,6 +71,7 @@ jobs:
           cp -r winter_foreste_market/dist pages-dist/winter_foreste_market
           cp -r arkhe_robotics/dist pages-dist/arkhe_robotics
           cp -r Somtoday/dist pages-dist/Somtoday
+          cp -r leucos/dist pages-dist/leucos
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

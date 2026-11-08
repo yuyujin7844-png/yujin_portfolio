@@ -12,6 +12,7 @@ React + MUI + Supabase 실습 프로젝트 모음. 한 저장소 안에 여러 �
 | Bloom Champagne (`Bloom_Champagne`) | <https://yuyujin7844-png.github.io/yujin_portfolio/Bloom_Champagne/> | 논알코올 스파클링 브랜드 랜딩페이지 |
 | Winter Forest Market (`winter_foreste_market`) | <https://yuyujin7844-png.github.io/yujin_portfolio/winter_foreste_market/> | 태화강 국가정원 크리스마스 마켓 행사 랜딩페이지 |
 | Sometoday (`Somtoday`) | <https://yuyujin7844-png.github.io/yujin_portfolio/Somtoday/> | 키즈 사진 스튜디오 메인 + 예약하기(`/Somtoday/reservation/`) 페이지 |
+| LEUCOS (`leucos`) | <https://yuyujin7844-png.github.io/yujin_portfolio/leucos/> | 티트리 진정 스킨케어 브랜드 메인 페이지 (반응형) |
 
 `main` 브랜치에 push하면 `.github/workflows/deploy.yml`이 각 프로젝트를 빌드해 자동 배포합니다 (약 1~2분 소요).
 
@@ -23,6 +24,7 @@ yujin_portfolio/
 ├── Bloom_Champagne/          # Bloom Champagne 랜딩페이지 (Vite + React + MUI + Supabase)
 ├── winter_foreste_market/    # Winter Forest Market 크리스마스 마켓 랜딩페이지 (Vite + React + MUI + Supabase)
 ├── Somtoday/                 # Sometoday 키즈 스튜디오 예약 메인 페이지 (Vite + React + MUI)
+├── leucos/                   # LEUCOS 스킨케어 브랜드 메인 페이지 (Vite + React + MUI)
 ├── deploy/index.html         # 배포 시 사이트 루트에 올라가는 랜딩페이지
 └── .github/workflows/
     └── deploy.yml            # GitHub Pages 배포 워크플로

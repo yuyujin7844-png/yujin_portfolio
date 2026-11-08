@@ -1,24 +1,38 @@
 import { Box, Link } from '@mui/material';
 import { COLORS, FONT_KO } from '../../theme.js';
 import { NAV_ITEMS } from '../../data/nav.js';
-import { asset } from '../../utils/asset.js';
+import { asset, pageUrl } from '../../utils/asset.js';
 
 // 히어로 이미지 위에 겹쳐지는 헤더 (높이 157 = 로고 바 94 + GNB 63)
-export default function Header() {
+// variant="sub" : 예약하기 등 서브 페이지 — 반투명 배경 이미지, 하단 라인 없음, 현재 메뉴 강조
+export default function Header({ variant = 'main', active }) {
+  const isSub = variant === 'sub';
+
   return (
     <Box
       component="header"
-      sx={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10, height: 157 }}
+      sx={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10,
+        height: 157,
+        ...(isSub && {
+          backgroundImage: `url(${asset('img/header-bg.png')})`,
+          backgroundSize: '100% 100%',
+        }),
+      }}
     >
       {/* 로고 바 */}
       <Box
         sx={{
           position: 'relative',
           height: 94,
-          borderBottom: `1px solid ${COLORS.headerLine}`,
+          borderBottom: isSub ? 'none' : `1px solid ${COLORS.headerLine}`,
         }}
       >
-        <Link href="#top" aria-label="Sometoday 홈" sx={{ position: 'absolute', top: 32, left: '50%', transform: 'translateX(-50%)' }}>
+        <Link href={pageUrl()} aria-label="Sometoday 홈" sx={{ position: 'absolute', top: 32, left: '50%', transform: 'translateX(-50%)' }}>
           <Box component="img" src={asset('ic/logo.svg')} alt="SomeToday" width={183.538} height={34.48} />
         </Link>
         <Link
@@ -52,24 +66,30 @@ export default function Header() {
           '&::-webkit-scrollbar': { display: 'none' },
         }}
       >
-        {NAV_ITEMS.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            underline="none"
-            sx={{
-              flexShrink: 0,
-              fontFamily: FONT_KO,
-              fontSize: 16,
-              lineHeight: 'normal',
-              color: COLORS.text,
-              transition: 'color .2s',
-              '&:hover': { color: COLORS.deep },
-            }}
-          >
-            {item.label}
-          </Link>
-        ))}
+        {NAV_ITEMS.map((item) => {
+          const isActive = item.key === active;
+          const baseColor = isSub ? COLORS.gnbSub : COLORS.text;
+          return (
+            <Link
+              key={item.key}
+              href={item.href}
+              underline="none"
+              aria-current={isActive ? 'page' : undefined}
+              sx={{
+                flexShrink: 0,
+                fontFamily: FONT_KO,
+                fontSize: 16,
+                fontWeight: isActive ? 500 : 400,
+                lineHeight: 'normal',
+                color: isActive ? COLORS.gnbActive : baseColor,
+                transition: 'color .2s',
+                '&:hover': { color: COLORS.deep },
+              }}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
       </Box>
     </Box>
   );

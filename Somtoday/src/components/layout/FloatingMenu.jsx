@@ -1,6 +1,6 @@
 import { Box, ButtonBase, Typography } from '@mui/material';
 import { COLORS, FONT_KO } from '../../theme.js';
-import { asset } from '../../utils/asset.js';
+import { asset, RESERVATION_URL } from '../../utils/asset.js';
 
 // 원형 버튼 + 라벨 (원 테두리는 피그마 SVG 그대로 사용)
 function FloatingButton({ href, icon, iconSize, iconOffset, label, labelTop }) {
@@ -47,6 +47,8 @@ export default function FloatingMenu() {
       component="aside"
       aria-label="빠른 메뉴"
       sx={{
+        // 모바일에서는 본문을 가리므로 숨김
+        display: { xs: 'none', sm: 'block' },
         position: 'fixed',
         zIndex: 20,
         right: { xs: 12, lg: 140 },
@@ -63,7 +65,7 @@ export default function FloatingMenu() {
         <FloatingButton href="#footer" icon="ic/talk.svg" iconSize={36} iconOffset={14} label="톡 상담" labelTop={64} />
       </Box>
       <Box sx={{ position: 'absolute', top: 121, left: 21 }}>
-        <FloatingButton href="#reserve" icon="ic/camera.svg" iconSize={32} iconOffset={15} label="바로 예약" labelTop={62} />
+        <FloatingButton href={RESERVATION_URL} icon="ic/camera.svg" iconSize={32} iconOffset={15} label="바로 예약" labelTop={62} />
       </Box>
       <ButtonBase
         onClick={scrollToTop}

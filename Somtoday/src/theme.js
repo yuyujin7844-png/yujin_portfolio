@@ -19,6 +19,17 @@ export const COLORS = {
   footerBg: '#F0F0F0',
   footerText: '#727272',
   copyright: '#B1B1B1',
+  // ── 예약하기 페이지 ──
+  gnbSub: '#2A2C2C', // 서브 헤더 GNB
+  gnbActive: '#050F14', // 서브 헤더 현재 메뉴
+  body: '#333333', // 옵션/달력 본문
+  cardLine: '#A2A2A2', // 컨셉 선택 카드 테두리
+  inputLine: '#767676', // 셀렉트 박스 테두리
+  stepperBg: '#D9D9D9',
+  stepperLine: '#969696',
+  stepperBtn: '#EFEFEF',
+  disabled: '#878787', // 마감 날짜
+  holiday: '#E30000', // 공휴일
 };
 
 export const FONT_KO = '"Noto Sans KR", "Roboto", sans-serif';

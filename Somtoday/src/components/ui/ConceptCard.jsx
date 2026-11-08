@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { COLORS, FONT_EN, FONT_KO } from '../../theme.js';
-import { asset } from '../../utils/asset.js';
+import { asset, RESERVATION_URL } from '../../utils/asset.js';
 import CroppedImage from './CroppedImage.jsx';
 
 const CARD_W = 625;
@@ -10,8 +10,12 @@ export default function ConceptCard({ concept }) {
   const { no, title, desc, image, img, fade } = concept;
   return (
     <Box
-      component="article"
+      component="a"
+      href={`${RESERVATION_URL}?concept=${no}`}
+      aria-label={`${title} 컨셉으로 예약하기`}
+      draggable={false}
       sx={{
+        display: 'block',
         position: 'relative',
         flex: 'none',
         width: { xs: 320, md: CARD_W },

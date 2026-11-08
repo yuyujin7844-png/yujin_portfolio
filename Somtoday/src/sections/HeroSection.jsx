@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { COLORS, FONT_KO } from '../theme.js';
-import { asset } from '../utils/asset.js';
+import { asset, RESERVATION_URL } from '../utils/asset.js';
 
 // 1920×1056 시안 — 높이는 화면 폭에 비례, 이미지 크롭 비율도 시안과 동일하게 유지
 export default function HeroSection() {
@@ -61,7 +61,7 @@ export default function HeroSection() {
         </Typography>
         <Button
           id="reserve"
-          href="#concept"
+          href={RESERVATION_URL}
           variant="contained"
           sx={{
             mt: { xs: '32px', md: '80px' },
